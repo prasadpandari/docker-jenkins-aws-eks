@@ -13,13 +13,12 @@ pipeline {
          }
          stage('Build Image') {
               steps {
-                  sh 'docker build -t prasad-capstone .'
+                  sh 'docker build -t prasadpandari/prasad-capstone .'
               }
          }
          stage('Push Docker Image') {
               steps {
                   withDockerRegistry([url: "", credentialsId: "docker-hub"]) {
-                      sh "docker tag prasad-capstone prasadpandari/prasad-capstone"
                       sh 'docker push prasadpandari/prasad-capstone'
                   }
               }
