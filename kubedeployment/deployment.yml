@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prasad
+  labels:
+    app: prasad-capstone
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prasad-capstone
+  strategy:
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: prasad-capstone
+    spec:
+      containers:
+        - image: prasadpandari/prasad-capstone
+          imagePullPolicy: Always
+          name: prasad-capstone
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prasad-capstone
+  labels:
+    app: prasad-capstone
+spec:
+  type: LoadBalancer
+  selector:
+    app: prasad-capstone
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+      protocol: TCP
