@@ -28,7 +28,7 @@ pipeline {
          stage('Deploying') {
               steps{
                   echo 'AWS deployment'
-                  withAWS(region: 'us-west-2', ,credentials:'aws-static') {
+                  withAWS(region: 'us-west-2', credentials:'aws-root') {
                       sh "aws eks --region us-west-2 update-kubeconfig --name prod"
                       sh "kubectl config use-context arn:aws:eks:us-west-2:967852153283:cluster/prod"
                       sh "kubectl set image deployments/prasad-capstone prasad-capstone=prasadpandari/prasad-capstone:latest"
